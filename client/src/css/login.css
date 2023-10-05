@@ -1,0 +1,55 @@
+.loginInput_container {
+  width: 450px;
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgb(152, 228, 145);
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgb(152, 228, 145);
+  background-color: rgb(238, 242, 238);
+  padding: 20px;
+}
+
+.loginInput_id,
+.loginInput_pw {
+  width: 300px;
+}
+
+.loginInput_id input,
+.loginInput_pw input {
+  width: 300px;
+  height: 50px;
+  border-top: 0px;
+  border-bottom: 0px;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  border-radius: 5px;
+  padding: 0px 10px;
+}
+
+.loginInput_id input {
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+.loginInput_pw input {
+  border-bottom: 1px solid black;
+}
+
+.loginButton {
+  width: 300px;
+  height: 50px;
+  margin-top: 20px;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 5px;
+  font-size: 20px;
+}
+
+.errorMessage {
+  font-size: 18px;
+  color: red;
+  margin-top: 20px;
+}

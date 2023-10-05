@@ -1,0 +1,49 @@
+.table-container {
+  width: 1000px;
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: end;
+}
+
+table {
+  width: 1000px;
+  margin: 0 auto;
+  border-spacing: 0px;
+  position: relative;
+}
+
+.bg-grey {
+  background-color: rgb(206, 202, 202);
+}
+
+tr {
+  margin: 10px;
+}
+
+th,
+td {
+  padding: 10px;
+  padding-left: 20px;
+  border-bottom: 1px solid black;
+}
+
+.center {
+  text-align: center;
+}
+
+.write {
+  display: inline;
+  position: absolute;
+  width: 100px;
+  height: 30px;
+  bottom: -50px;
+  right: 20px;
+  text-align: center;
+  line-height: 30px;
+  color: black;
+  border-radius: 5px;
+  background-color: rgb(95, 203, 99);
+}
