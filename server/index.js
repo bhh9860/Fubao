@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
-const app = express();ttps://port-0-server-2rrqq2blmqlhn5j.sel5.clou
+const app = express();
 const mysql = require('mysql2');
 //커넥션 파일 불러오기
 const connection = require('./connection');
@@ -23,8 +23,6 @@ app.use(cors(corsOptions)); //cors 허용
 
 app.use(express.static(path.join(__dirname, '../client/build')));
 app.use(express.static(path.join(__dirname, 'public')));
-
-console.log(process.env.FRONTURL);
 
 //리액트 파일만 보여주겠습니다.(클라이언트 사이드 렌더링)
 app.get('/', (req, res) => {
