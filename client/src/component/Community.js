@@ -68,7 +68,7 @@ const About = () => {
 //data 요청함수
 const data = () => {
   return axios
-    .get('http://localhost:8000/community')
+    .get('https://port-0-server-2rrqq2blmqlhn5j.sel5.cloudtype.app/community')
     .then((res) => {
       return res.data;
     })

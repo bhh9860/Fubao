@@ -33,7 +33,7 @@ const Login = () => {
       setErrorMessage(alertText);
     } else {
       axios
-        .post('http://localhost:8000/Login', {
+        .post('https://port-0-server-2rrqq2blmqlhn5j.sel5.cloudtype.app/Login', {
           email: email,
           pw: pw,
         })

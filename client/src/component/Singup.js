@@ -82,7 +82,7 @@ const Singup = () => {
               onClick={() => {
                 if (check(email, pw, pwCheck, nickName, agree)) {
                   axios
-                    .post('http://localhost:8000/singup', {
+                    .post('https://port-0-server-2rrqq2blmqlhn5j.sel5.cloudtype.app/singup', {
                       email: email,
                       pw: pw,
                       nickName: nickName,

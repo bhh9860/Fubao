@@ -39,7 +39,7 @@ const Write = () => {
       formData.append('img', file); // formData는 키-밸류 구조
       // 백엔드 multer라우터에 이미지를 보낸다.
       try {
-        const result = await axios.post('http://localhost:8000/img', formData);
+        const result = await axios.post('https://port-0-server-2rrqq2blmqlhn5j.sel5.cloudtype.app/img', formData);
         console.log('성공 시, 백엔드가 보내주는 데이터', result.data.url);
         const IMG_URL = result.data.url;
         // 이 URL을 img 태그의 src에 넣은 요소를 현재 에디터의 커서에 넣어주면 에디터 내에서 이미지가 나타난다
@@ -127,7 +127,7 @@ const submit = (title, content) => {
   };
 
   axios
-    .post('http://localhost:8000/write', data)
+    .post('https://port-0-server-2rrqq2blmqlhn5j.sel5.cloudtype.app/write', data)
     .then((res) => {
       console.log(res);
     })
