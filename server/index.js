@@ -8,12 +8,13 @@ const connection = require('./connection');
 //이미지 업로드
 const multer = require('multer');
 
+require('dotenv').config();
 const PORT = 8000;
 
 app.use(express.json()); // json 파서 사용
 app.use(express.urlencoded({ extended: false })); // 내부 url 파서 사용
 const corsOptions = {
-  origin: 'https://web-client-2rrqq2blmqlhn5j.sel5.cloudtype.app', // 프론트엔드 도메인
+  origin: process.env.FRONTURL, // 프론트엔드 도메인
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true, // 쿠키를 주고받을 수 있도록 설정
   optionsSuccessStatus: 204,
@@ -256,8 +257,8 @@ app.get('/community/:id', (req, res) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`http://localhost:${PORT}`);
+app.listen(process.env.PORT, () => {
+  console.log(`http://localhost:${process.env.PORT}`);
 });
 
 app.get('*', (req, res) => {
