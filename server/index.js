@@ -24,6 +24,8 @@ app.use(cors(corsOptions)); //cors 허용
 app.use(express.static(path.join(__dirname, '../client/build')));
 app.use(express.static(path.join(__dirname, 'public')));
 
+console.log(process.env.FRONTURL);
+
 //리액트 파일만 보여주겠습니다.(클라이언트 사이드 렌더링)
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build/index.html'));
