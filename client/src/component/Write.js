@@ -110,7 +110,15 @@ const Write = () => {
         onClick={() => {
           if (submitCheck(title, content)) {
             submit(title, content);
-            navigate('/community');
+            async function delayedLog() {
+              // 3초 대기
+              await new Promise((resolve) => setTimeout(resolve, 3000));
+
+              // 3초가 지난 후에 실행될 코드
+              console.log('3초가 지났습니다.');
+              navigate('/community');
+            }
+            delayedLog();
           }
         }}
       >
