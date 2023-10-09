@@ -259,8 +259,8 @@ app.get('/community/:id', (req, res) => {
   });
 });
 
-app.listen(process.env.PORT, () => {
-  console.log(`http://localhost:${process.env.PORT}`);
+app.listen(PORT, () => {
+  console.log(`http://localhost:${PORT}`);
 });
 
 app.get('*', (req, res) => {
