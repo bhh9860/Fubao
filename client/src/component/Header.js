@@ -23,13 +23,13 @@ const header = () => {
               <a href="/home">
                 <li>HOME</li>
               </a>
-              <a href="about">
+              <a href="/about">
                 <li>ABOUT</li>
               </a>
-              <a href="store">
+              <a href="/store">
                 <li>STORE</li>
               </a>
-              <a href="community">
+              <a href="/community">
                 <li>COMMUNITY</li>
               </a>
             </ul>

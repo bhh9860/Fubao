@@ -119,7 +119,7 @@ app.post('/write', (req, res) => {
   console.log(file);
 
   connection.query(
-    `INSERT INTO board (title, content, addFile, nickName) VALUES ('${title}', '${content}', '${file}', 'jeong')`,
+    `INSERT INTO board (title, content, addFile, nickName) VALUES ('${title}', '${content}', '${file}', 'jeong'`,
     (err, result) => {
       if (err) {
         console.log('글쓰기 실패: ', err);
