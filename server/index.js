@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
-const app = express();
+const app = express();ttps://port-0-server-2rrqq2blmqlhn5j.sel5.clou
 const mysql = require('mysql2');
 //커넥션 파일 불러오기
 const connection = require('./connection');
@@ -14,7 +14,7 @@ const PORT = 8000;
 app.use(express.json()); // json 파서 사용
 app.use(express.urlencoded({ extended: false })); // 내부 url 파서 사용
 const corsOptions = {
-  origin: process.env.FRONTURL, // 프론트엔드 도메인
+  origin: 'https://web-client-2rrqq2blmqlhn5j.sel5.cloudtype.app', // 프론트엔드 도메인
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true, // 쿠키를 주고받을 수 있도록 설정
   optionsSuccessStatus: 204,
