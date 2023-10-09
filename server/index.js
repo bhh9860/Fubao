@@ -212,6 +212,7 @@ app.post('/singup', async (req, res) => {
 app.post('/Login', (req, res) => {
   const email = req.body.email;
   const pw = req.body.pw;
+  console.log(email, pw);
 
   connection.query(`SELECT * FROM user WHERE userEmail='${email}'`, async (err, result) => {
     if (err) {
