@@ -12,7 +12,13 @@ const PORT = 8000;
 
 app.use(express.json()); // json 파서 사용
 app.use(express.urlencoded({ extended: false })); // 내부 url 파서 사용
-app.use(cors()); //cors 허용
+const corsOptions = {
+  origin: 'https://web-client-2rrqq2blmqlhn5j.sel5.cloudtype.app', // 프론트엔드 도메인
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true, // 쿠키를 주고받을 수 있도록 설정
+  optionsSuccessStatus: 204,
+};
+app.use(cors(corsOptions)); //cors 허용
 
 app.use(express.static(path.join(__dirname, '../client/build')));
 app.use(express.static(path.join(__dirname, 'public')));
