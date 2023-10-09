@@ -27,13 +27,13 @@ const About = () => {
       <div className="table-container">
         <table className="table">
           <tr className="bg-grey">
-            <th>id</th>
-            <th>title</th>
-            <th>addFile</th>
-            <th>nickName</th>
-            <th>views</th>
-            <th>likes</th>
-            <th>time</th>
+            <th>글번호</th>
+            <th>제목</th>
+            <th>첨부파일</th>
+            <th>닉네임</th>
+            <th>조회수</th>
+            <th>추천</th>
+            <th>작성시간</th>
           </tr>
           {/* 최신 데이터부터 보여줌 */}
           {reverseData.reverse().map((item, i) => {
@@ -41,8 +41,12 @@ const About = () => {
             return (
               <>
                 <tr key={i}>
-                  <td>{item._id}</td>
-                  <td>{item.title}</td>
+                  <td style={{ textAlign: 'center' }}>{item._id}</td>
+                  <td>
+                    <Link to={`/community/${item._id}`} style={{ color: 'black' }}>
+                      {item.title}
+                    </Link>
+                  </td>
                   <td className="center">{item.addFile == 1 ? 'O' : 'X'}</td>
                   <td className="center">{item.nickName}</td>
                   <td className="center">{item.views}</td>

@@ -13,8 +13,9 @@ hr {
 }
 
 .title {
-  width: 500px;
+  width: 800px;
   height: 30px;
+  padding-left: 15px !important;
   padding: 0px;
   border: 1px solid black;
   border-top-left-radius: 5px;
@@ -32,4 +33,20 @@ hr {
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
   resize: none;
+}
+
+/* .quill {
+  width: 500px;
+} */
+
+.ql-container.ql-snow {
+  width: 800px;
+  height: 500px;
+  border: 1px solid black;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.quill {
+  font-family: 'LeeSeoyun';
 }

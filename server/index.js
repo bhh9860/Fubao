@@ -5,6 +5,54 @@ const app = express();
 const mysql = require('mysql2');
 //커넥션 파일 불러오기
 const connection = require('./connection');
+//이미지 업로드
+const multer = require('multer');
+
+const PORT = 8000;
+
+app.use(express.json()); // json 파서 사용
+app.use(express.urlencoded({ extended: false })); // 내부 url 파서 사용
+app.use(cors()); //cors 허용
+
+app.use(express.static(path.join(__dirname, '../client/build')));
+app.use(express.static(path.join(__dirname, 'public')));
+
+//리액트 파일만 보여주겠습니다.(클라이언트 사이드 렌더링)
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+
+// multer 설정
+const upload = multer({
+  storage: multer.diskStorage({
+    // 저장할 장소
+    destination(req, file, cb) {
+      cb(null, 'public/uploads');
+    },
+    // 저장할 이미지의 파일명
+    filename(req, file, cb) {
+      const ext = path.extname(file.originalname); // 파일의 확장자
+      console.log('file.originalname', file.originalname);
+      // 파일명이 절대 겹치지 않도록 해줘야한다.
+      // 파일이름 + 현재시간밀리초 + 파일확장자명
+      cb(null, path.basename(file.originalname, ext) + Date.now() + ext);
+    },
+  }),
+  // limits: { fileSize: 5 * 1024 * 1024 } // 파일 크기 제한
+});
+
+// 하나의 이미지 파일만 가져온다.
+app.post('/img', upload.single('img'), (req, res) => {
+  // 해당 라우터가 정상적으로 작동하면 public/uploads에 이미지가 업로드된다.
+  // 업로드된 이미지의 URL 경로를 프론트엔드로 반환한다.
+  console.log('전달받은 파일', req.file);
+  console.log('저장된 파일의 이름', req.file.filename);
+
+  // 파일이 저장된 경로를 클라이언트에게 반환해준다.
+  const IMG_URL = `http://localhost:8000/uploads/${req.file.filename}`;
+  console.log(IMG_URL);
+  res.json({ url: IMG_URL });
+});
 
 //비밀번호 암호화
 const crypto = require('crypto');
@@ -39,19 +87,6 @@ const verifyPassword = async (password, salt) => {
   return hashedPassword;
 };
 
-const PORT = 8000;
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cors());
-
-app.use(express.static(path.join(__dirname, '../client/build')));
-
-//리액트 파일만 보여주겠습니다.(클라이언트 사이드 렌더링)
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/build/index.html'));
-});
-
 // mysql 커넥션
 
 //community get 요청
@@ -71,9 +106,20 @@ app.get('/community', (req, res) => {
 app.post('/write', (req, res) => {
   const title = req.body.title;
   const content = req.body.content;
+  console.log(typeof content);
+  function isFile(content) {
+    let index = content.indexOf('<img');
+    if (index !== -1) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
+  let file = isFile(content);
+  console.log(file);
 
   connection.query(
-    `INSERT INTO board (title, content, nickName) VALUES ('${title}', '${content}', 'jeong')`,
+    `INSERT INTO board (title, content, addFile, nickName) VALUES ('${title}', '${content}', '${file}', 'jeong')`,
     (err, result) => {
       if (err) {
         console.log('글쓰기 실패: ', err);
@@ -186,6 +232,19 @@ app.post('/Login', (req, res) => {
         console.log('일치하는 회원정보가 없습니다');
         res.status(401).json({ err: '로그인 정보 없음' });
       }
+    }
+  });
+});
+
+app.get('/community/:id', (req, res) => {
+  const id = req.params.id;
+  connection.query(`SELECT * FROM board WHERE _id='${id}'`, (err, result) => {
+    if (err) {
+      console.log('커뮤니티 불러오기 실패 ', err);
+      res.status(500).json({ err: '커뮤니티 불러오기 실패' });
+    } else {
+      console.log('커뮤니티 불러오기 성공');
+      res.status(200).json(result);
     }
   });
 });
