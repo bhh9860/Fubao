@@ -12,7 +12,9 @@ const About = () => {
     data()
       .then((res) => {
         let copy = [...res];
-        setReverseData(copy.reverse());
+        let temp = copy.reverse();
+        console.log('temp', temp);
+        setReverseData(temp);
       })
       .catch((err) => {
         console.log(err);

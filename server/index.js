@@ -258,6 +258,15 @@ app.get('/community/:id', (req, res) => {
       res.status(500).json({ err: '커뮤니티 불러오기 실패' });
     } else {
       console.log('커뮤니티 불러오기 성공');
+      //조회수 1 증가
+      connection.query(`UPDATE board SET views = views + 1 WHERE _id='${id}'`, (err, result) => {
+        if (err) {
+          console.log('조회수 증가 실패 ', err);
+          res.status(500).json({ err: '조회수 증가 실패' });
+        } else {
+          console.log('조회수 증가 성공');
+        }
+      });
       res.status(200).json(result);
     }
   });
