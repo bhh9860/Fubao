@@ -6,15 +6,15 @@ const mysql = require('mysql2');
 //커넥션 파일 불러오기
 const connection = require('./connection');
 //이미지 업로드
+const { S3Client } = require('@aws-sdk/client-s3');
 const multer = require('multer');
+const multerS3 = require('multer-s3');
 
 require('dotenv').config();
 const PORT = 8000;
 
 app.use(express.json()); // json 파서 사용
 app.use(express.urlencoded({ extended: false })); // 내부 url 파서 사용
-
-console.log('zzz', process.env.API_URL);
 
 const corsOptions = {
   origin: process.env.API_URL, // 프론트엔드 도메인
@@ -33,34 +33,36 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
 
+const s3 = new S3Client({
+  region: 'ap-northeast-2',
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  },
+});
+
 // multer 설정
 const upload = multer({
-  storage: multer.diskStorage({
-    // 저장할 장소
-    destination(req, file, cb) {
-      cb(null, 'public/uploads');
-    },
-    // 저장할 이미지의 파일명
-    filename(req, file, cb) {
-      const ext = path.extname(file.originalname); // 파일의 확장자
-      console.log('file.originalname', file.originalname);
-      // 파일명이 절대 겹치지 않도록 해줘야한다.
-      // 파일이름 + 현재시간밀리초 + 파일확장자명
-      cb(null, path.basename(file.originalname, ext) + Date.now() + ext);
+  storage: multerS3({
+    s3: s3,
+    bucket: 'fubao-img',
+    key: function (요청, file, cb) {
+      cb(null, Date.now().toString()); //업로드시 파일명 변경가능
     },
   }),
-  // limits: { fileSize: 5 * 1024 * 1024 } // 파일 크기 제한
 });
 
 // 하나의 이미지 파일만 가져온다.
-app.post('/img', upload.single('img'), (req, res) => {
+app.post('/img', upload.array('img', 9), (req, res) => {
   // 해당 라우터가 정상적으로 작동하면 public/uploads에 이미지가 업로드된다.
   // 업로드된 이미지의 URL 경로를 프론트엔드로 반환한다.
-  console.log('전달받은 파일', req.file);
-  console.log('저장된 파일의 이름', req.file.filename);
+  console.log('이미지 개수는', req.files.length);
+  // console.log('전달받은 파일', req.files);
+  // console.log('저장된 파일의 이름', req.files[0].location);
+  // console.log(req.files);
 
   // 파일이 저장된 경로를 클라이언트에게 반환해준다.
-  const IMG_URL = `http://localhost:8000/uploads/${req.file.filename}`;
+  const IMG_URL = req.files[0].location;
   console.log(IMG_URL);
   res.json({ url: IMG_URL });
 });
