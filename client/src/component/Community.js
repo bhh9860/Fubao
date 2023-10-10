@@ -13,6 +13,7 @@ const About = () => {
       .then((res) => {
         let copy = [...res];
         let temp = copy.reverse();
+        console.log('res', res);
         console.log('temp', temp);
         setReverseData(temp);
       })
@@ -38,7 +39,7 @@ const About = () => {
             <th>작성시간</th>
           </tr>
           {/* 최신 데이터부터 보여줌 */}
-          {reverseData.reverse().map((item, i) => {
+          {reverseData.map((item, i) => {
             const date = new Date(item.time);
             return (
               <>
