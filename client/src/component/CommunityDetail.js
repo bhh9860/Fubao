@@ -12,7 +12,7 @@ const CommunityId = () => {
     // 비동기 함수로 데이터를 불러옵니다.
     const fetchData = async () => {
       try {
-        const response = await axios.get(`https://port-0-server-2rrqq2blmqlhn5j.sel5.cloudtype.app/community/${id}`);
+        const response = await axios.get(`${process.env.REACT_APP_API_LOCALURL}/community/${id}`);
         // 데이터 요청이 성공한 경우 데이터 상태를 업데이트합니다.
         setData(response.data);
         console.log(data[0].content);

@@ -68,8 +68,9 @@ const About = () => {
 //data 요청함수
 const data = () => {
   return axios
-    .get('https://port-0-server-2rrqq2blmqlhn5j.sel5.cloudtype.app/community')
+    .get(`${process.env.REACT_APP_API_LOCALURL}/community`)
     .then((res) => {
+      console.log(process.env.REACT_APP_API_LOCALURL);
       return res.data;
     })
     .catch((err) => {

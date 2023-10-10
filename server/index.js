@@ -13,15 +13,17 @@ const PORT = 8000;
 
 app.use(express.json()); // json 파서 사용
 app.use(express.urlencoded({ extended: false })); // 내부 url 파서 사용
-console.log('NODE_ENV', process.env.NODE_ENV);
-console.log('domain', process.env.FRONTURL);
+
+console.log('zzz', process.env.API_URL);
+
 const corsOptions = {
-  origin: process.env.FRONTURL, // 프론트엔드 도메인
+  origin: process.env.API_URL, // 프론트엔드 도메인
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true, // 쿠키를 주고받을 수 있도록 설정
   optionsSuccessStatus: 204,
 };
 app.use(cors(corsOptions)); //cors 허용
+console.log('zzz', process.env.API_URL);
 
 app.use(express.static(path.join(__dirname, '../client/build')));
 app.use(express.static(path.join(__dirname, 'public')));
