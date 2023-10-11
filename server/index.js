@@ -272,6 +272,23 @@ app.get('/community/:id', (req, res) => {
   });
 });
 
+//좋아요싫어요 기능
+app.post('/like', (req, res) => {
+  let a = '';
+  req.body.click == 1 ? (a = '+1') : (a = '-1');
+  connection.query(`UPDATE board SET likes = likes ${a} WHERE _id='${req.body.id}'`, (err, result) => {
+    if (err) {
+      console.log('좋아요싫어요 기능 실패 ', err);
+      res.status(500).json({ err: '좋아요싫어요 기능 실패' });
+    } else {
+      var result = '';
+      req.body.click == 1 ? (result = '좋아요 성공') : (result = '싫어요 성공');
+      console.log(result);
+      res.status(200).json({ result });
+    }
+  });
+});
+
 app.listen(PORT, () => {
   console.log(`http://localhost:${PORT}`);
 });
