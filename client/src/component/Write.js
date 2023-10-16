@@ -11,7 +11,8 @@ import 'react-quill/dist/quill.snow.css';
 import ImageResize from 'quill-image-resize';
 Quill.register('modules/ImageResize', ImageResize);
 
-const Write = () => {
+const Write = (props) => {
+  const { nickName } = props;
   let navigate = useNavigate();
 
   const [title, setTitle] = useState('');
@@ -115,7 +116,7 @@ const Write = () => {
       <button
         onClick={() => {
           if (submitCheck(title, content)) {
-            submit(title, content);
+            submit(title, content, nickName);
             async function delayedLog() {
               // 3초 대기
               await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -134,10 +135,11 @@ const Write = () => {
   );
 };
 
-const submit = (title, content) => {
+const submit = (title, content, nickName) => {
   const data = {
     title: title,
     content: content,
+    nickName: nickName,
   };
 
   axios

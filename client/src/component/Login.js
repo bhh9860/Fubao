@@ -5,7 +5,8 @@ import '../css/login.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const Login = (props) => {
+  const { reload, setReload } = props;
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [pw, setPw] = useState('');
@@ -38,7 +39,9 @@ const Login = () => {
           pw: pw,
         })
         .then((res) => {
-          console.log('로그인 성공');
+          console.log(res.data.message);
+          localStorage.setItem('loginToken', res.data.token);
+          setReload(!reload);
           navigate('/home');
         })
         .catch((err) => {
@@ -52,7 +55,7 @@ const Login = () => {
 
   return (
     <div className="container">
-      <div classNmae="menu_title">
+      <div className="menu_title">
         <h1>로그인</h1>
       </div>
       <div className="loginInput_container">

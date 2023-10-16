@@ -102,3 +102,14 @@
 .header_user a:hover {
   color: white;
 }
+
+.header_user button:hover {
+  color: white;
+}
+
+.header_user button {
+  border: none !important;
+  background-color: transparent !important;
+  font-size: 15px !important;
+  font-weight: bold !important;
+}

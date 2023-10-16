@@ -1,9 +1,22 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../css/header.css';
 import '../css/initial.css';
 import Logo from '../assets/img/logo.png';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-const header = () => {
+const Header = (props) => {
+  const { nickName, setNickName } = props;
+  const navigate = useNavigate();
+
+  const logout = () => {
+    localStorage.removeItem('loginToken');
+    // 새로고침 하면 헤더 정보 업데이트
+    // eslint-disable-next-line no-restricted-globals
+    location.reload();
+    navigate('/home');
+  };
+
   return (
     <>
       <header className="header">
@@ -26,30 +39,46 @@ const header = () => {
               <a href="/about">
                 <li>ABOUT</li>
               </a>
-              <a href="/store">
-                <li>STORE</li>
-              </a>
               <a href="/community">
                 <li>COMMUNITY</li>
               </a>
             </ul>
           </div>
         </div>
-        <div className="header_user">
-          <div className="header_user_signup">
-            <a href="/singup">
-              <p>Sign Up</p>
-            </a>
+
+        {nickName != '' ? (
+          <div className="header_user">
+            <button className="header_user_signup">
+              <a href="#">
+                <p>{nickName}</p>
+              </a>
+            </button>
+            <button
+              onClick={() => {
+                logout();
+              }}
+              className="header_user_login"
+            >
+              <p>로그아웃</p>
+            </button>
           </div>
-          <div className="header_user_login">
-            <a href="/login">
-              <p>Login</p>
-            </a>
+        ) : (
+          <div className="header_user">
+            <div className="header_user_signup">
+              <a href="/singup">
+                <p>회원가입</p>
+              </a>
+            </div>
+            <div className="header_user_login">
+              <a href="/login">
+                <p>로그인</p>
+              </a>
+            </div>
           </div>
-        </div>
+        )}
       </header>
     </>
   );
 };
 
-export default header;
+export default Header;

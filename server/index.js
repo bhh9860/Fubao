@@ -3,6 +3,8 @@ const cors = require('cors');
 const path = require('path');
 const app = express();
 const mysql = require('mysql2');
+// jwt 라이브러리
+const jwt = require('jsonwebtoken');
 //커넥션 파일 불러오기
 const connection = require('./connection');
 //이미지 업로드
@@ -119,6 +121,7 @@ app.get('/community', (req, res) => {
 app.post('/write', (req, res) => {
   const title = req.body.title;
   const content = req.body.content;
+  const nickName = req.body.nickName;
   console.log(typeof content);
   function isFile(content) {
     let index = content.indexOf('<img');
@@ -132,7 +135,7 @@ app.post('/write', (req, res) => {
   console.log(file);
 
   connection.query(
-    `INSERT INTO board (title, content, addFile, nickName) VALUES ('${title}', '${content}', '${file}', 'jeong')`,
+    `INSERT INTO board (title, content, addFile, nickName) VALUES ('${title}', '${content}', '${file}', '${nickName}')`,
     (err, result) => {
       if (err) {
         console.log('글쓰기 실패: ', err);
@@ -219,6 +222,7 @@ app.post('/singup', async (req, res) => {
 app.post('/Login', (req, res) => {
   const email = req.body.email;
   const pw = req.body.pw;
+
   console.log(email, pw);
 
   connection.query(`SELECT * FROM user WHERE userEmail='${email}'`, async (err, result) => {
@@ -234,9 +238,24 @@ app.post('/Login', (req, res) => {
         const vertifiedPassword = await verifyPassword(pw, salt);
 
         if (vertifiedPassword === pwHash) {
-          console.log('로그인 성공');
+          console.log('비밀번호 일치함');
           // result[0]은 userId, email, Pw, NickName, Salt가 포함됨.
-          res.status(200).json({ result });
+          // 토큰 생성
+          let token = '';
+          const key = process.env.JWT_SECRET_KEY;
+          // jwt.sign(payload, secretOrPrivateKey, [options, callback])
+          token = jwt.sign(
+            {
+              type: 'jwt',
+              nickName: result[0].userNickName,
+            },
+            key,
+            {
+              expiresIn: '15m',
+              issuer: 'admin',
+            }
+          );
+          res.status(200).json({ message: 'token is created', token });
         } else {
           console.log('로그인 실패 : 비밀번호 불일치');
           res.status(401).json({ err: '로그인 실패 : 비밀번호 불일치' });
@@ -287,6 +306,19 @@ app.post('/like', (req, res) => {
       res.status(200).json({ result });
     }
   });
+});
+
+app.post('/token', (req, res, nex) => {
+  const token = req.body.token;
+  const key = process.env.JWT_SECRET_KEY;
+
+  try {
+    const decoded = jwt.verify(token, key);
+    console.log('decode', decoded);
+    res.status(200).json({ message: 'token is verified', nickName: decoded.nickName });
+  } catch (err) {
+    res.status(401).json({ err: 'token is not valid' });
+  }
 });
 
 app.listen(PORT, () => {
