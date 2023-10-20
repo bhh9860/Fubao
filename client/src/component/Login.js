@@ -40,6 +40,7 @@ const Login = (props) => {
         })
         .then((res) => {
           console.log(res.data.message);
+          // 토큰보내기
           localStorage.setItem('loginToken', res.data.token);
           setReload(!reload);
           navigate('/home');

@@ -87,6 +87,7 @@ const CommunityId = () => {
               </button>
             </div>
           </div>
+          <hr></hr>
         </div>
       ) : (
         <div>Loading...</div>

@@ -21,17 +21,18 @@ function App() {
           .post(`${process.env.REACT_APP_API_LOCALURL}/token`, { token })
           .then((res) => {
             setNickName(res.data.nickName);
+            console.log('로그인 유지 : ', res.data.nickName);
           })
           .catch((err) => {
             if (err.response.status == 401) {
               localStorage.removeItem('loginToken');
             }
             setNickName('');
+            console.log('로그인 안됨 ', err);
           })
       : console.log('로그인안됨');
   }, [reload]);
 
-  console.log(reload);
   return (
     <div className="App">
       <Router>
@@ -40,7 +41,7 @@ function App() {
           <Route path="/" element={<Navigate to="/home" />} />
           <Route path="/home" element={<Home />} />
           <Route path="/about" element={<About />} />
-          <Route path="/community" element={<Community />} />
+          <Route path="/community" element={<Community nickName={nickName} />} />
           <Route path="/community/:id" element={<CommunityDetail />} />
           <Route path="/write" element={<Write nickName={nickName} />} />
           <Route path="/singup" element={<Singup />} />

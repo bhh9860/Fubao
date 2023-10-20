@@ -4,8 +4,11 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../css/community.css';
 import '../css/common.css';
+import { useNavigate } from 'react-router-dom';
 
-const About = () => {
+const About = (props) => {
+  const navigate = useNavigate();
+  const { nickName } = props;
   //최신 데이터부터 보여주기 위해 reverseData 사용
   let [reverseData, setReverseData] = useState([]);
   useEffect(() => {
@@ -60,9 +63,20 @@ const About = () => {
             );
           })}
         </table>
-        <Link to="/write" className="write">
+
+        <button
+          onClick={() => {
+            if (nickName == '') {
+              alert('로그인 후 이용해주세요');
+              navigate('/login');
+            } else {
+              navigate('/write');
+            }
+          }}
+          className="write"
+        >
           글쓰기
-        </Link>
+        </button>
       </div>
     </div>
   );
