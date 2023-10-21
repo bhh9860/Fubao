@@ -321,6 +321,38 @@ app.post('/token', (req, res, nex) => {
   }
 });
 
+//댓글 작성
+app.post('/reply', (req, res) => {
+  connection.query(
+    `INSERT INTO reply (community_id, replyNickName, replyComment) VALUES ('${req.body.id}', '${req.body.nickName}', '${req.body.replyWrite}')`,
+    (err, result) => {
+      if (err) {
+        console.log('댓글등록 실패: ', err);
+        res.status(500).json({ err: '댓글등록 실패' });
+      } else {
+        console.log('댓글등록 성공');
+        res.status(200).json(result);
+      }
+    }
+  );
+});
+
+//댓글 조회
+app.get('/reply/:id', (req, res) => {
+  console.log(req.params.id);
+
+  connection.query(`SELECT * FROM reply WHERE community_id='${req.params.id}'`, (err, result) => {
+    if (err) {
+      console.log('댓글 조회 실패: ', err);
+      res.status(500).json({ err: '댓글 조회 실패' });
+    } else {
+      console.log('댓글 조회 성공');
+      console.log(result);
+      res.status(200).json(result);
+    }
+  });
+});
+
 app.listen(PORT, () => {
   console.log(`http://localhost:${PORT}`);
 });

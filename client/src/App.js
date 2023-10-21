@@ -42,7 +42,7 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/community" element={<Community nickName={nickName} />} />
-          <Route path="/community/:id" element={<CommunityDetail />} />
+          <Route path="/community/:id" element={<CommunityDetail nickName={nickName} />} />
           <Route path="/write" element={<Write nickName={nickName} />} />
           <Route path="/singup" element={<Singup />} />
           <Route path="/login" element={<Login reload={reload} setReload={setReload} />} />

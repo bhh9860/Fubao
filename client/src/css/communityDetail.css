@@ -91,7 +91,7 @@ h3 {
   margin-top: 50px;
 }
 
-button {
+.button_container button {
   width: 100px;
   height: 70px;
   border-radius: 15px;
@@ -111,4 +111,74 @@ button:hover {
 
 .button_hate {
   margin-left: 30px;
+}
+
+.reply_container {
+  width: 100%;
+  margin-top: 50px;
+  margin-bottom: 100px;
+  border-top: 1px solid black;
+}
+
+.replys {
+  width: 100%;
+  margin-top: 15px;
+}
+
+.reply {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.replyNickName {
+  width: 10%;
+  height: 100%;
+  text-align: center;
+}
+
+.replyComment {
+  width: 50%;
+  height: 100%;
+  text-align: left;
+}
+
+.replyTime {
+  width: 220px;
+  height: 100%;
+  text-align: center;
+}
+
+.reply_write_container {
+  width: 100%;
+  height: 100px;
+  display: flex;
+  margin-top: 15px;
+}
+
+.reply_write textarea {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  border: 1px solid black;
+  resize: none;
+}
+
+.reply_write {
+  width: 80%;
+  height: 100%;
+}
+
+.reply_button {
+  width: 20%;
+  height: 100%;
+}
+
+.reply_button button {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  border: 1px solid black;
 }
