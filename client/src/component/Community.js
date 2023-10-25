@@ -47,9 +47,9 @@ const About = (props) => {
             return (
               <>
                 <tr key={i}>
-                  <td style={{ textAlign: 'center' }}>{item._id}</td>
+                  <td style={{ textAlign: 'center' }}>{item.boardId}</td>
                   <td>
-                    <Link to={`/community/${item._id}`} style={{ color: 'black' }}>
+                    <Link to={`/community/${item.boardId}`} style={{ color: 'black' }}>
                       {item.title}
                     </Link>
                   </td>

@@ -271,14 +271,14 @@ app.post('/Login', (req, res) => {
 
 app.get('/community/:id', (req, res) => {
   const id = req.params.id;
-  connection.query(`SELECT * FROM board WHERE _id='${id}'`, (err, result) => {
+  connection.query(`SELECT * FROM board WHERE boardId='${id}'`, (err, result) => {
     if (err) {
       console.log('커뮤니티 불러오기 실패 ', err);
       res.status(500).json({ err: '커뮤니티 불러오기 실패' });
     } else {
       console.log('커뮤니티 불러오기 성공');
       //조회수 1 증가
-      connection.query(`UPDATE board SET views = views + 1 WHERE _id='${id}'`, (err, result) => {
+      connection.query(`UPDATE board SET views = views + 1 WHERE boardId='${id}'`, (err, result) => {
         if (err) {
           console.log('조회수 증가 실패 ', err);
           res.status(500).json({ err: '조회수 증가 실패' });
@@ -295,7 +295,7 @@ app.get('/community/:id', (req, res) => {
 app.post('/like', (req, res) => {
   let a = '';
   req.body.click == 1 ? (a = '+1') : (a = '-1');
-  connection.query(`UPDATE board SET likes = likes ${a} WHERE _id='${req.body.id}'`, (err, result) => {
+  connection.query(`UPDATE board SET likes = likes ${a} WHERE boardId='${req.body.id}'`, (err, result) => {
     if (err) {
       console.log('좋아요싫어요 기능 실패 ', err);
       res.status(500).json({ err: '좋아요싫어요 기능 실패' });
